@@ -3,13 +3,14 @@
 Provides a serial connection abstraction layer
 for use with Arduino "MultipleServos" sketch.
 '''
-
+import sys
 import time
 
 import serial
 
 usbport = '/dev/tty.usbserial-A6008bB7'
-ser = serial.Serial(usbport, 9600, timeout=1)
+#ser = serial.Serial(usbport, 9600, timeout=1)
+ser = sys.stdout
 
 def move(direction):
     '''Moves the robot in the direction.
@@ -24,7 +25,7 @@ def move(direction):
     direction = direction.upper()
     if direction in ('F', 'B', 'L', 'R'):
         print direction
-        ser.write(direction)
+        #ser.write(direction)
     else:
         print "Must inform valid direction:"
         print "      L for left"
