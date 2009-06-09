@@ -2,6 +2,8 @@
 import socket
 import robot
 
+import time
+
 HOST = '' 
 PORT = 50007 
 
@@ -18,10 +20,11 @@ while 1:
     data = conn.recv(1024)
 
     if not data: 
-        break
-    
-    if data in commands:	
-        robot.move(data)
+        time.sleep(1)
+
+    print data 
+    #if data in commands:	
+    #    robot.move(data)
 
 conn.close()
 

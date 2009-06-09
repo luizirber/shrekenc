@@ -2,7 +2,9 @@
 import socket
 import sensor
 
-HOST = '192.168.1.106'       
+import time
+
+HOST = '192.168.2.101'       
 PORT = 50007 
 
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -11,6 +13,8 @@ s.connect((HOST, PORT))
 sensor_type = sensor.sensors()['RotSensor']
 N95_sensor = sensor.Sensor(sensor_type['id'], sensor_type['category'])
 N95_sensor.set_event_filter(sensor.RotEventFilter())
+
+direction = 'F'
 
 def get_sensor_data (status):
     global direction
@@ -32,10 +36,10 @@ N95_sensor.connect (get_sensor_data)
 while True:
 
     if  direction == 'Q':
-        break		
+        quit()
+        s.close()
 
-    s.send(data)
+    s.send(direction)
+    time.sleep(1)
 
-quit()
-s.close()
 
