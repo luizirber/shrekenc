@@ -19,6 +19,8 @@ int M2_STOP = 0;
 int M2_FULL = 500;
 int M2_STEP = 8;
 
+int WAIT_TIME = 1000;
+
 /* DEBUG */
 int ledPin = 13;                // LED connected to digital pin 13
 
@@ -67,7 +69,7 @@ void move_forward() {
   digitalWrite(ledPin, HIGH);
   analogWrite(pinMotor1, M1_FULL);
   analogWrite(pinMotor2, M2_FULL);
-  delay(10000);
+  delay(WAIT_TIME);
   analogWrite(pinMotor1, M1_STOP);
   analogWrite(pinMotor2, M2_STOP);  
   digitalWrite(ledPin, LOW);
@@ -76,7 +78,7 @@ void move_forward() {
 void move_left() {
   digitalWrite(ledPin, HIGH);
   analogWrite(pinMotor2, M2_FULL);
-  delay(10000);
+  delay(WAIT_TIME);
   analogWrite(pinMotor2, M2_STOP);  
   digitalWrite(ledPin, LOW);
 }
@@ -84,7 +86,7 @@ void move_left() {
 void move_right() {
   digitalWrite(ledPin, HIGH);
   analogWrite(pinMotor1, M1_FULL);
-  delay(10000);
+  delay(WAIT_TIME);
   analogWrite(pinMotor1, M1_STOP);  
   digitalWrite(ledPin, LOW);
 }

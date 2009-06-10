@@ -23,8 +23,8 @@ while 1:
         time.sleep(1)
 
     print data 
-    #if data in commands:	
-    #    robot.move(data)
+    if data in commands:
+        robot.move(data)
 
 conn.close()
 
