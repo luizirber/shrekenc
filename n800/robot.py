@@ -8,8 +8,8 @@ import time
 
 import serial
 
-usbport = '/dev/tty.usbserial-A6008bB7'
-#ser = serial.Serial(usbport, 9600, timeout=1)
+usbport = '/dev/ttyUSB0'
+ser = serial.Serial(usbport, 9600, timeout=1)
 
 def move(direction):
     '''Moves the robot in the direction.
@@ -23,7 +23,7 @@ def move(direction):
 
     direction = direction.upper()
     if direction in ('F', 'B', 'L', 'R'):
-        #ser.write(direction)
+        ser.write(direction)
         pass
     else:
         print "Must inform valid direction:"

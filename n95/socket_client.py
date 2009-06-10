@@ -1,11 +1,10 @@
 # Echo client program
 import socket
 import sensor
-
 import time
 
-HOST = '192.168.2.101'       
-PORT = 50007 
+HOST = '192.168.1.100'       
+PORT = 50009 
 
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 s.connect((HOST, PORT))
@@ -38,8 +37,7 @@ while True:
     if  direction == 'Q':
         quit()
         s.close()
+	break
 
     s.send(direction)
     time.sleep(1)
-
-

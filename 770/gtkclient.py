@@ -4,40 +4,24 @@ import sys, os
 import pygtk, gtk, gobject
 import socket
 
-from subprocess import Popen
-
 HOST = '127.0.0.1'
-PORT = 50007
+PORT = 50008
  
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 s.connect((HOST, PORT))
-
-MPLAYER_CMD="mplayer -vo x11 -fps 15 -wid %i -slave -idle -noconsolecontrols sdp://n800.sdp"  
 
 class GTK_Main:
 	def __init__(self):
 		window = gtk.Window(gtk.WINDOW_TOPLEVEL)
 		window.set_title("Webcam-Viewer")
-		window.set_default_size(500, 400)
+		window.set_default_size(80, 80)
 		window.connect("destroy", gtk.main_quit, "WM destroy")
-		vbox = gtk.VBox()
-		window.add(vbox)
-		self.movie_window = gtk.DrawingArea()
-		vbox.add(self.movie_window)
+
 		hbox = gtk.HBox()
-		vbox.pack_start(hbox, False)
+		window.add(hbox)
 
 		hbox.set_border_width(10)
 		hbox.pack_start(gtk.Label())
-		self.button = gtk.Button("Start")
-		#self.button.connect("clicked", self.start_stop)
-		hbox.pack_start(self.button, False)
-		self.button2 = gtk.Button("Quit")
-		self.button2.connect("clicked", self.exit)
-		hbox.pack_start(self.button2, False)
-		self.button3 = gtk.Button("-")
-		#self.button3.connect("clicked", self.exit)
-		hbox.pack_start(self.button3, False)
 		self.button4 = gtk.Button("Right")
 		self.button4.connect("clicked", self.move_right)
 		hbox.pack_start(self.button4, False)
@@ -51,10 +35,6 @@ class GTK_Main:
 		hbox.add(gtk.Label())
 
 		window.show_all()
-
-		command = MPLAYER_CMD  % (self.movie_window.window.xid)
-		commandList = command.split()
-		Popen(commandList)
 
 	def exit(self, widget, data=None):
 		s.send('Q')

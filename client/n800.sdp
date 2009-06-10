@@ -4,10 +4,10 @@ s=QuickTime
 t=0 0
 a=range:npt=now-
 m=audio 5432 RTP/AVP 0
-c=IN IP4 192.168.1.115
+c=IN IP4 192.168.1.100
 b=AS:63
 m=video 5434 RTP/AVP 96
-c=IN IP4 192.168.1.115
+c=IN IP4 192.168.1.100
 a=rtpmap:96 H263-2000/90000
 a=fmtp:96
 a=cliprect:0,0,144,176
