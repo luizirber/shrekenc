@@ -12,7 +12,10 @@ PORT = 50007
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 s.connect((HOST, PORT))
 
-MPLAYER_CMD="mplayer -vo x11 -fps 15 -wid %i -slave -idle -noconsolecontrols sdp://n800.sdp"  
+FIFO = "/tmp/fifo%d" % time.time()
+STDOUT = "/tmp/out%d" % time.time()
+STDERR = "/dev/null"
+MPLAYER_CMD="mplayer -vo x11 -fps 15 -wid %i -slave -idle -noconsolecontrols sdp://n800.sdp"
 
 class GTK_Main:
 	def __init__(self):
@@ -40,25 +43,40 @@ class GTK_Main:
 		hbox.pack_start(self.button3, False)
 		self.button4 = gtk.Button("Right")
 		self.button4.connect("clicked", self.move_right)
+		self.button4.connect("pressed", self.move_right)
 		hbox.pack_start(self.button4, False)
 		self.button5 = gtk.Button("Forward")
 		self.button5.connect("clicked", self.move_forward)
+		self.button5.connect("pressed", self.move_forward)
 		hbox.pack_start(self.button5, False)
 		self.button6 = gtk.Button("Left")
 		self.button6.connect("clicked", self.move_left)
+		self.button6.connect("pressed", self.move_left)
 		hbox.pack_start(self.button6, False)
 		
 		hbox.add(gtk.Label())
 
 		window.show_all()
 
-		command = MPLAYER_CMD  % (self.movie_window.window.xid)
-		commandList = command.split()
-		Popen(commandList)
+        if os.path.exists(FIFO):
+            os.unlink(FIFO)
+
+        if os.path.exists(DUMP):
+            os.unlink(DUMP)
+
+        os.mkfifo(FIFO)
+
+        command = MPLAYER_CMD  % (self.movie_window.window.xid)
+        commandList = command.split()
+        Popen(commandList, stdout=open(STDOUT,"w+b"), stderr=open(STDOUT,"r+b"))
+
+        self.mplayerClient = open(FIFO,"w")
 
 	def exit(self, widget, data=None):
 		s.send('Q')
-		gtk.main_quit()
+        mplayerClient.write('quit')
+        gtk.main_quit()
+
 
 	def move_right(self, widget, data=None):
 		s.send('R')
